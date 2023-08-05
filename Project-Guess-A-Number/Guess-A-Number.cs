@@ -28,7 +28,11 @@ namespace Project_Guess_A_Number
 
                 while (true)
                 {
-                    Console.Write($"Level {currentLevel} - Guess a number ({minRange}-{maxRange}): ");
+                    Console.Write("Level ");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write(currentLevel);
+                    Console.ResetColor();
+                    Console.Write($" - Guess a number ({minRange}-{maxRange}): ");
 
                     string playerInput = Console.ReadLine();
                     bool isValid = int.TryParse(playerInput, out int playerNumber);
@@ -37,19 +41,26 @@ namespace Project_Guess_A_Number
                     {
                         if (playerNumber == computerNumber)
                         {
+                            Console.ForegroundColor = ConsoleColor.Cyan;
                             Console.WriteLine("You guessed it!");
+                            Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine($"Congratulations! You've completed level {currentLevel}.");
+                            Console.ResetColor();
                             currentLevel++;
                             Console.WriteLine();
                             break;
                         }
                         else if (playerNumber > computerNumber)
                         {
-                            Console.WriteLine("Too High");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Too High!");
+                            Console.ResetColor();
                         }
                         else
                         {
-                            Console.WriteLine("Too Low");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("Too Low!");
+                            Console.ResetColor();
                         }
                     }
                     else
@@ -67,14 +78,10 @@ namespace Project_Guess_A_Number
                     timer.Stop();
                     TimeSpan totalTime = timer.Elapsed;
 
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine($"Congratulations! You've completed all levels in {totalTime:hh\\:mm\\:ss} time.");
-
-                    if (totalTime < bestTime)
-                    {
-                        bestTime = totalTime;
-                        Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss}");
-                    }
-
+                    Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss} !");
+                    Console.ResetColor();
                     PlayAgain();
                 }
             }
@@ -105,7 +112,9 @@ namespace Project_Guess_A_Number
 
             do
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("Play again? [y]es or [n]o: ");
+                Console.ResetColor();
                 playAgain = Console.ReadLine().ToLower();
             } while (playAgain != "y" && playAgain != "yes" && playAgain != "n" && playAgain != "no");
 
@@ -118,7 +127,9 @@ namespace Project_Guess_A_Number
             else
             {
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Thank you for playing!");
+                Console.ResetColor();
             }
         }
     }
