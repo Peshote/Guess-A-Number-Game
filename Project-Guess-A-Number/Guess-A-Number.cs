@@ -6,7 +6,7 @@ namespace Project_Guess_A_Number
     internal class Program
     {
         private static int currentLevel = 1;
-        private static TimeSpan bestTime = TimeSpan.MaxValue;
+        private static TimeSpan bestTime = TimeSpan.FromHours(24); // Set to 24 hours initially
 
         static void Main(string[] args)
         {
@@ -53,19 +53,19 @@ namespace Project_Guess_A_Number
                         else if (playerNumber > computerNumber)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Too High!");
+                            Console.WriteLine("Too High");
                             Console.ResetColor();
                         }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("Too Low!");
+                            Console.WriteLine("Too Low");
                             Console.ResetColor();
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid input.");
+                        Console.WriteLine("Invalid input!");
                     }
                 }
 
@@ -80,7 +80,13 @@ namespace Project_Guess_A_Number
 
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine($"Congratulations! You've completed all levels in {totalTime:hh\\:mm\\:ss} time.");
-                    Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss} !");
+
+                    if (totalTime < bestTime)
+                    {
+                        bestTime = totalTime;
+                        Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss} !");
+                    }
+
                     Console.ResetColor();
                     PlayAgain();
                 }
