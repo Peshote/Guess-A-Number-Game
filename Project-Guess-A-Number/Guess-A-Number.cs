@@ -6,6 +6,11 @@ namespace Project_Guess_A_Number
     {
         static void Main(string[] args)
         {
+            PlayGame(); // Start the game
+        }
+
+        static void PlayGame()
+        {
             Random randomNumber = new Random();
             int computerNumber = randomNumber.Next(1, 101);
 
@@ -21,9 +26,10 @@ namespace Project_Guess_A_Number
                     if (playerNumber == computerNumber)
                     {
                         Console.WriteLine("You guessed it!");
+                        PlayAgain(); // Ask if the player wants to play again
                         break;
                     }
-                    else if(playerNumber > computerNumber)
+                    else if (playerNumber > computerNumber)
                     {
                         Console.WriteLine("Too High");
                     }
@@ -36,6 +42,27 @@ namespace Project_Guess_A_Number
                 {
                     Console.WriteLine("Invalid input.");
                 }
+            }
+        }
+
+        static void PlayAgain()
+        {
+            string playAgain;
+            do
+            {
+                Console.Write("Play again? [y]es or [n]o: ");
+                playAgain = Console.ReadLine().ToLower();
+            } while (playAgain != "y" && playAgain != "yes" && playAgain != "n" && playAgain != "no");
+
+            if (playAgain == "y" || playAgain == "yes")
+            {
+                Console.WriteLine();
+                PlayGame(); // Start a new game
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Thank you for playing!");
             }
         }
     }
