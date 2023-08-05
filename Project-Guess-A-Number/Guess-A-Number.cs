@@ -4,50 +4,90 @@ namespace Project_Guess_A_Number
 {
     internal class Program
     {
+        private static int currentLevel = 1;
+
         static void Main(string[] args)
         {
-            PlayGame(); // Start the game
+            PlayGame();
         }
 
         static void PlayGame()
         {
-            Random randomNumber = new Random();
-            int computerNumber = randomNumber.Next(1, 101);
-
-            while (true)
+            if (currentLevel <= 5)
             {
-                Console.Write("Guess a number (1-100): ");
+                int minRange = 1;
+                int maxRange = GetMaxRangeForLevel(currentLevel);
 
-                string playerInput = Console.ReadLine();
-                bool isValid = int.TryParse(playerInput, out int playerNumber);
+                Random randomNumber = new Random();
+                int computerNumber = randomNumber.Next(minRange, maxRange + 1);
 
-                if (isValid)
+                while (true)
                 {
-                    if (playerNumber == computerNumber)
+                    Console.Write($"Level {currentLevel} - Guess a number ({minRange}-{maxRange}): ");
+
+                    string playerInput = Console.ReadLine();
+                    bool isValid = int.TryParse(playerInput, out int playerNumber);
+
+                    if (isValid)
                     {
-                        Console.WriteLine("You guessed it!");
-                        PlayAgain(); // Ask if the player wants to play again
-                        break;
-                    }
-                    else if (playerNumber > computerNumber)
-                    {
-                        Console.WriteLine("Too High");
+                        if (playerNumber == computerNumber)
+                        {
+                            Console.WriteLine("You guessed it!");
+                            Console.WriteLine($"Congratulations! You've completed level {currentLevel}.");
+                            currentLevel++;
+                            Console.WriteLine();
+                            break;
+                        }
+                        else if (playerNumber > computerNumber)
+                        {
+                            Console.WriteLine("Too High");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Too Low");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Too Low");
+                        Console.WriteLine("Invalid input.");
                     }
+                }
+
+                if (currentLevel <= 5)
+                {
+                    PlayGame();
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input.");
+                    Console.WriteLine("Congratulations! You've completed all levels.");
+                    PlayAgain();
                 }
+            }
+        }
+
+        static int GetMaxRangeForLevel(int level)
+        {
+            switch (level)
+            {
+                case 1:
+                    return 100;
+                case 2:
+                    return 200;
+                case 3:
+                    return 500;
+                case 4:
+                    return 1000;
+                case 5:
+                    return 2000;
+                default:
+                    return 100;
             }
         }
 
         static void PlayAgain()
         {
             string playAgain;
+
             do
             {
                 Console.Write("Play again? [y]es or [n]o: ");
@@ -56,8 +96,9 @@ namespace Project_Guess_A_Number
 
             if (playAgain == "y" || playAgain == "yes")
             {
+                currentLevel = 1;
                 Console.WriteLine();
-                PlayGame(); // Start a new game
+                PlayGame();
             }
             else
             {
