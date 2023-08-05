@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Project_Guess_A_Number
 {
     internal class Program
     {
         private static int currentLevel = 1;
+        private static TimeSpan bestTime = TimeSpan.MaxValue;
 
         static void Main(string[] args)
         {
@@ -13,6 +15,9 @@ namespace Project_Guess_A_Number
 
         static void PlayGame()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+
             if (currentLevel <= 5)
             {
                 int minRange = 1;
@@ -59,7 +64,17 @@ namespace Project_Guess_A_Number
                 }
                 else
                 {
-                    Console.WriteLine("Congratulations! You've completed all levels.");
+                    timer.Stop();
+                    TimeSpan totalTime = timer.Elapsed;
+
+                    Console.WriteLine($"Congratulations! You've completed all levels in {totalTime:hh\\:mm\\:ss} time.");
+
+                    if (totalTime < bestTime)
+                    {
+                        bestTime = totalTime;
+                        Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss}");
+                    }
+
                     PlayAgain();
                 }
             }
