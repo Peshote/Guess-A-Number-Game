@@ -7,6 +7,7 @@ namespace Project_Guess_A_Number
     {
         private static int currentLevel = 1;
         private static TimeSpan bestTime = TimeSpan.FromHours(24); // Set to 24 hours initially
+        private static Stopwatch timer = new Stopwatch(); // Create a single stopwatch for the entire game
 
         static void Main(string[] args)
         {
@@ -15,8 +16,10 @@ namespace Project_Guess_A_Number
 
         static void PlayGame()
         {
-            Stopwatch timer = new Stopwatch(); // Create a stopwatch to measure time
-            timer.Start(); // Start the stopwatch
+            if (currentLevel == 1)
+            {
+                timer.Restart(); // Restart the timer for the new game
+            }
 
             if (currentLevel <= 5)
             {
@@ -84,10 +87,11 @@ namespace Project_Guess_A_Number
                     if (totalTime < bestTime)
                     {
                         bestTime = totalTime; // Update the best time record if needed
-                        Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss} !");
                     }
 
+                    Console.WriteLine($"Your best time record is {bestTime:hh\\:mm\\:ss} !");
                     Console.ResetColor();
+
                     PlayAgain(); // Ask if the player wants to play again
                 }
             }
